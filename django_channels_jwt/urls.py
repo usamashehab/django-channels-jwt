@@ -2,6 +2,6 @@ from django.urls import path
 from .views import AsgiValidateTokenView
 
 
-url_patterns = [
+urlpatterns = [
     path("auth_for_ws_connection/", AsgiValidateTokenView.as_view())
 ]

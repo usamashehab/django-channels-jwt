@@ -29,7 +29,6 @@ setup(
     ],
     license='MIT',
     zip_safe=False,
-    keywords='django_channels_jwt',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',

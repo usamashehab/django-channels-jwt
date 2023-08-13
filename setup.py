@@ -9,17 +9,17 @@ history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 
 setup(
-    name='django-channels-secure-jwt',
-    version='1.0.0',
+    name='django-channels-jwt',
+    version='0.0.1',
     description='Secure JWT Auth Middleware for Django Channels',
     long_description=readme + '\n\n' + history,
     long_description_content_type='text/markdown',
     author='Usama Shehab',
     author_email='usama.mh.shehab@gmail.com',
     url='https://github.com/usamashehab/django-channels-jwt',
-    packages=['django_channels_secure_jwt'],
+    packages=['django_channels_jwt'],
     package_dir={
-        'django_channels_secure_jwt': 'django_channels_secure_jwt'},
+        'django_channels_jwt': 'django_channels_jwt'},
     include_package_data=True,
     python_requires='>=3.8',
     install_requires=[

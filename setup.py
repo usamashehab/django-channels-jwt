@@ -37,5 +37,6 @@ setup(
         'Natural Language :: English',
         'Programming Language :: Python :: 3.11',
     ],
-    test_suite='tests.runtests.runtests',
+    keywords=['django', 'channels', 'jwt', 'auth',
+              'middleware', 'python', 'authentication']
 )

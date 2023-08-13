@@ -23,9 +23,9 @@ setup(
     include_package_data=True,
     python_requires='>=3.8',
     install_requires=[
-        'Django>=4.2.4',
+        'Django>=4.0.0',
         'channels>=4.0.0',
-        'djangorestframework-simplejwt>=5.2.2',
+        'djangorestframework-simplejwt>=5.0.0',
     ],
     license='MIT',
     zip_safe=False,

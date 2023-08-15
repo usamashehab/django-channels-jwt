@@ -10,7 +10,7 @@ history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 
 setup(
     name='django-channels-jwt',
-    version='0.0.2',
+    version='0.0.3',
     description='Secure JWT Auth Middleware for Django Channels',
     long_description=readme + '\n\n' + history,
     long_description_content_type='text/markdown',
@@ -21,11 +21,10 @@ setup(
     package_dir={
         'django_channels_jwt': 'django_channels_jwt'},
     include_package_data=True,
-    python_requires='>=3.10',
+    python_requires='>=3.8',
     install_requires=[
-        'Django>=4.0.0',
-        'channels>=4.0.0',
-        'djangorestframework-simplejwt>=5.0.0',
+        'Django>=3.0.0',
+        'channels>=4.0.0'
     ],
     license='MIT',
     zip_safe=False,

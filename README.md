@@ -47,7 +47,7 @@ pip install django-channels-jwt
 
    url_patterns = [
        # ... your other URL patterns
-       path("api/auth/", include('django_channels_jwt.urls')
+       path("api/auth/", include('django_channels_jwt.urls')),
    ]
    ```
 or if you want to set customized route

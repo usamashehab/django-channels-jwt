@@ -28,7 +28,7 @@ pip install django-channels-jwt
 
 1. Wrap your URLRouter
    ```python
-   from django_channels_jwt.middlware import JwtAuthMiddlewareStack
+   from django_channels_jwt.middleware import JwtAuthMiddlewareStack
 
    application = ProtocolTypeRouter({
        "http": get_asgi_application(),

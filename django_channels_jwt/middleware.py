@@ -1,11 +1,9 @@
-"""General web socket middlewares
-"""
+"""General web socket middlewares"""
 
-from channels.db import database_sync_to_async
+from channels.db import database_sync_to_async, aclose_old_connections
 from urllib.parse import parse_qsl
 from channels.middleware import BaseMiddleware
 from channels.auth import AuthMiddlewareStack
-from django.db import close_old_connections
 from django.contrib.auth import get_user_model
 import logging
 from django.core.cache import cache
@@ -19,9 +17,11 @@ User = get_user_model()
 def get_user(user_id):
     try:
         return User.objects.get(id=user_id)
-    except:
+    except Exception:
         raise Exception(
-            'user not found, you may forgot to request a uuid from the server, try auth_for_ws_connection ')
+            "User not found. You may have forgotten to request a ticket from the server "
+            "via the auth_for_ws_connection endpoint."
+        )
 
 
 class JwtAuthMiddleware(BaseMiddleware):
@@ -30,28 +30,28 @@ class JwtAuthMiddleware(BaseMiddleware):
 
     async def auth(self, query_string):
         """
-        chick if the queuserry string include the same uuid in the cache
-        if yes then fetch the user using the decoded uuid which is the user id
-        if raised exception then the uuid is wrong or not sent,
-        so close the connection
+        Check if the query string includes a valid UUID ticket stored in cache.
+        If valid, fetch the corresponding user and return it.
+        The UUID is deleted from cache immediately for security (one-time use).
         """
         query_params = dict(parse_qsl(query_string))
-        uuid = query_params.get('uuid')
+        uuid = query_params.get("uuid")
         user_id = cache.get(uuid)
-        # I destroyed uuid for performance and security purposes
+        # Destroy UUID immediately for performance and security (one-time use token)
         if not cache.delete(uuid):
-            raise Exception('uuid not found')
+            raise Exception("UUID not found or already consumed.")
         return await get_user(user_id)
 
     async def __call__(self, scope, receive, send):
-       # Close old database connections to prevent usage of timed out connections
-        close_old_connections()
+        # Channels 4.2+ automatically closes old DB connections on connect/disconnect,
+        # but we call aclose_old_connections() here as well for safety on older setups.
+        await aclose_old_connections()
 
         try:
-            query_string = scope['query_string'].decode('utf-8')
-            scope['user'] = await self.auth(query_string)
+            query_string = scope["query_string"].decode("utf-8")
+            scope["user"] = await self.auth(query_string)
         except Exception as e:
-            logger.warning(e)
+            logger.warning("WebSocket authentication failed: %s", e)
             return None
 
         return await super().__call__(scope, receive, send)

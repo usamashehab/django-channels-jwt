@@ -1,6 +1,14 @@
-# Django Channels JWT 
+# Django Channels JWT
 
 Django Channels JWT Middleware is a secure way to handle authentication for Django Channels WebSocket connections without directly exposing JWT tokens. Instead of sending the token itself in the query parameter, this middleware uses UUID-based authentication and cache-based user retrieval for enhanced security.
+
+## Compatibility
+
+| Package  | Supported versions |
+|----------|--------------------|
+| Django   | 4.2, 5.0, 5.1, 5.2 |
+| channels | 4.x                |
+| Python   | 3.10, 3.11, 3.12, 3.13 |
 
 ## Security Benefits
 
@@ -28,7 +36,7 @@ pip install django-channels-jwt
 
 1. Wrap your URLRouter
    ```python
-   from django_channels_jwt.middlware import JwtAuthMiddlewareStack
+   from django_channels_jwt.middleware import JwtAuthMiddlewareStack
 
    application = ProtocolTypeRouter({
        "http": get_asgi_application(),
